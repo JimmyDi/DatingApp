@@ -9,7 +9,7 @@ import { User } from '../_models/user';
 })
 export class AccountService {
   baseUrl = 'https://localhost:5001/api/'
-  private currentUserSource = new ReplaySubject<User | null>(1);
+  private currentUserSource = new ReplaySubject<User>(1);
   currentUsers$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -26,7 +26,7 @@ export class AccountService {
       })
     )
   }
-  
+
   register(model: any) {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: any) => {
@@ -45,6 +45,6 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
-    this.currentUserSource.next(null);
+    this.currentUserSource.next(undefined);
   }
 }
