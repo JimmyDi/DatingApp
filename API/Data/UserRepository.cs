@@ -24,7 +24,7 @@ namespace API.Data
             _mapper = mapper;
         }
         
-        public async void Update(AppUser user)
+        public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;
         }
