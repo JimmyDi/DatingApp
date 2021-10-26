@@ -31,11 +31,12 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-            userParams.CurretnUsername = User.GetUsername();
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUserName());
+            userParams.CurretnUserName = User.GetUserName();
 
             if (string.IsNullOrEmpty(userParams.Gender))
             {
@@ -50,16 +51,17 @@ namespace API.Controllers
         }
         
         // api/users/3
-        [HttpGet("{username}", Name = "GetUser")]
-        public async Task<ActionResult<MemberDto>> GetUser(string username)
+        [Authorize(Roles = "Member")]
+        [HttpGet("{UserName}", Name = "GetUser")]
+        public async Task<ActionResult<MemberDto>> GetUser(string UserName)
         {
-            return await _userRepository.GetMemberAsync(username);
+            return await _userRepository.GetMemberAsync(UserName);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUserName());
 
             user.City = memberUpdateDto.City;
             
@@ -75,7 +77,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUserName());
 
             var result = await _photoService.AddPhotoAsync(file);
 
@@ -96,7 +98,7 @@ namespace API.Controllers
 
             if (await _userRepository.SaveAllAsync())
             {
-                return CreatedAtRoute("GetUser", new {Username = user.Username},_mapper.Map<PhotoDto>(photo));
+                return CreatedAtRoute("GetUser", new {UserName = user.UserName},_mapper.Map<PhotoDto>(photo));
                 // return CreatedAtRoute()
             }
 
@@ -106,7 +108,7 @@ namespace API.Controllers
         [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUserName());
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
@@ -124,7 +126,7 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _userRepository.GetUserByUserNameAsync(User.GetUserName());
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 

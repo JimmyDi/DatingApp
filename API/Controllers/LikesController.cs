@@ -22,11 +22,11 @@ namespace API.Controllers
             _likesRepository = likesRepository;
         }
 
-        [HttpPost("{username}")]
-        public async Task<ActionResult> AddLike(string username)
+        [HttpPost("{UserName}")]
+        public async Task<ActionResult> AddLike(string UserName)
         {
             var sourceUserId = User.GetUserId();
-            var likedUser = await _userRepository.GetUserByUsernameAsync(username);
+            var likedUser = await _userRepository.GetUserByUserNameAsync(UserName);
             var sourceUser = await _likesRepository.getUserWithLikes(sourceUserId);
 
             if (likedUser == null)
@@ -34,7 +34,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            if (sourceUser.Username == username) return BadRequest("You cannot like yourself");
+            if (sourceUser.UserName == UserName) return BadRequest("You cannot like yourself");
 
             var userLike = await _likesRepository.GetUserLike(sourceUserId, likedUser.Id);
 

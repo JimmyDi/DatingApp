@@ -37,7 +37,7 @@ namespace API.Controllers
             }
 
             var sender = await _userRepository.GetUserByIdAsync(userId);
-            var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+            var recipient = await _userRepository.GetUserByUserNameAsync(createMessageDto.RecipientUserName);
 
             if (recipient == null) return NotFound();
 
@@ -45,8 +45,8 @@ namespace API.Controllers
             {
                 Sender = sender,
                 Recipient = recipient,
-                SenderUsername = sender.Username,
-                RecipientUsername = recipient.Username,
+                SenderUserName = sender.UserName,
+                RecipientUserName = recipient.UserName,
                 Content = createMessageDto.Content
             };
             
@@ -64,7 +64,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
             var sender = await _userRepository.GetUserByIdAsync(userId);
 
-            messageParams.Username = sender.Username;
+            messageParams.UserName = sender.UserName;
 
             var messages = await _messageRepository.GetMessagesForUser(messageParams);
             
@@ -75,29 +75,29 @@ namespace API.Controllers
         }
         
         
-        [HttpGet("thread/{username}")]
-        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string username)
+        [HttpGet("thread/{UserName}")]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string UserName)
         {
-            var currentUsername = User.GetUsername();
+            var currentUserName = User.GetUserName();
 
-            return Ok(await _messageRepository.GetMessageThread(currentUsername, username));
+            return Ok(await _messageRepository.GetMessageThread(currentUserName, UserName));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMessage(int id)
         {
-            var username = User.GetUsername();
+            var UserName = User.GetUserName();
 
             var message = await _messageRepository.GetMessage(id);
 
-            if (message.Sender.Username != username && message.Recipient.Username != username)
+            if (message.Sender.UserName != UserName && message.Recipient.UserName != UserName)
             {
                 return Unauthorized();
             }
 
-            if (message.Sender.Username == username) message.SenderDeleted = true;
+            if (message.Sender.UserName == UserName) message.SenderDeleted = true;
 
-            if (message.Recipient.Username == username) message.RecipientDeleted = true;
+            if (message.Recipient.UserName == UserName) message.RecipientDeleted = true;
             
             if (message.SenderDeleted && message.RecipientDeleted) _messageRepository.DeleteMessage(message);
 

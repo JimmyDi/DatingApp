@@ -2,7 +2,7 @@ namespace API.Helpers
 {
     public class UserParams : PaginationParams
     {
-        public string CurretnUsername { get; set; }
+        public string CurretnUserName { get; set; }
 
         public string Gender { get; set; }
 

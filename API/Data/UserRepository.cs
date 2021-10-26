@@ -46,17 +46,17 @@ namespace API.Data
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        public async Task<AppUser> GetUserByUserNameAsync(string UserName)
         {
             return await _context.Users
                 .Include(p => p.Photos)
-                .SingleOrDefaultAsync(x => x.Username == username);
+                .SingleOrDefaultAsync(x => x.UserName == UserName);
         }
 
-        public async Task<MemberDto> GetMemberAsync(string username)
+        public async Task<MemberDto> GetMemberAsync(string UserName)
         {
             return await _context.Users
-                .Where(x => x.Username == username)
+                .Where(x => x.UserName == UserName)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
@@ -65,7 +65,7 @@ namespace API.Data
         {
             var query = _context.Users.AsQueryable();
 
-            query = query.Where(u => u.Username != userParams.CurretnUsername);
+            query = query.Where(u => u.UserName != userParams.CurretnUserName);
             query = query.Where(u => u.Gender == userParams.Gender);
 
             var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);

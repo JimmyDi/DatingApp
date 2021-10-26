@@ -1,6 +1,6 @@
 [
   {
-    "Username": "Kay",
+    "UserName": "Kay",
     "Gender": "male",
     "DateOfBirth": "1981-02-05",
     "Created": "2020-06-09",
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "Username": "Grace",
+    "UserName": "Grace",
     "Gender": "male",
     "DateOfBirth": "1993-11-26",
     "Created": "2020-02-06",
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "Username": "Cristina",
+    "UserName": "Cristina",
     "Gender": "male",
     "DateOfBirth": "1997-04-02",
     "Created": "2019-02-15",
@@ -54,7 +54,7 @@
     ]
   },
   {
-    "Username": "Rita",
+    "UserName": "Rita",
     "Gender": "male",
     "DateOfBirth": "1977-11-11",
     "Created": "2019-04-29",
@@ -72,7 +72,7 @@
     ]
   },
   {
-    "Username": "Luann",
+    "UserName": "Luann",
     "Gender": "male",
     "DateOfBirth": "1971-04-06",
     "Created": "2019-08-23",
@@ -90,7 +90,7 @@
     ]
   },
     {
-      "Username": "Mona",
+      "UserName": "Mona",
       "Gender": "female",
       "DateOfBirth": "1977-05-12",
       "Created": "2019-10-25",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "Username": "Tina",
+      "UserName": "Tina",
       "Gender": "female",
       "DateOfBirth": "1958-06-02",
       "Created": "2019-09-27",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "Username": "Gina",
+      "UserName": "Gina",
       "Gender": "female",
       "DateOfBirth": "1965-06-24",
       "Created": "2019-11-03",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "Username": "Judith",
+      "UserName": "Judith",
       "Gender": "female",
       "DateOfBirth": "1997-03-04",
       "Created": "2020-04-25",
@@ -162,7 +162,7 @@
       ]
     },
     {
-      "Username": "Lottie",
+      "UserName": "Lottie",
       "Gender": "female",
       "DateOfBirth": "1994-09-15",
       "Created": "2020-02-17",
