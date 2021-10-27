@@ -29,14 +29,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
         {
-            var userId = User.GetUserId();
+            var userName = User.GetUserName();
             
-            if(userId == -1)
+            if(userName == createMessageDto.RecipientUserName.ToLower())
             {
                 return BadRequest("You cannot send messages to yourself");
             }
 
-            var sender = await _userRepository.GetUserByIdAsync(userId);
+            var sender = await _userRepository.GetUserByUserNameAsync(userName);
             var recipient = await _userRepository.GetUserByUserNameAsync(createMessageDto.RecipientUserName);
 
             if (recipient == null) return NotFound();
